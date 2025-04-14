@@ -7,15 +7,41 @@
 # You can add other services your application may depend on here, such as a
 # database or a cache. For examples, see the Awesome Compose repository:
 # https://github.com/docker/awesome-compose
-services:
-  server:
-    build:
-      context: .
-    environment:
-      NODE_ENV: production
-    ports:
-      - 8000:8000
+version: '3.8'
 
+services:
+  web:
+    container_name: nextjs_app
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile
+    ports:
+      - '8000:8000'
+    environment:
+      - NODE_ENV=production
+      # Update Prisma connection string for MySQL below
+      - DATABASE_URL=mysql://root:password@db:3306/ecommerce
+    depends_on:
+      - db
+    volumes:
+      - ./apps/web:/app
+    restart: unless-stopped
+
+  db:
+    container_name: mysql_db
+    image: mysql:8
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: ecommerce
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
 # The commented out section below is an example of how to define a PostgreSQL
 # database that your application can use. `depends_on` tells Docker Compose to
 # start the database before your application. The `db-data` volume persists the
