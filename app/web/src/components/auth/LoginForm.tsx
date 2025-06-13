@@ -33,6 +33,7 @@ export default function LoginForm() {
           <button>Google</button>
           <button>Facebook</button>
           <button>Twitter</button>
+          <button>test</button>
         </CardFooter>
       </Card>
     </main>
