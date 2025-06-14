@@ -1,35 +1,70 @@
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { loginSchema } from "@/schema/form-schema";
-import { useForm } from "react-hook-form";
+"use client";
 
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "../ui/button";
+import { Input } from "@/components/ui/input";
+import { loginSchema } from "@/schema/form-schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
 export default function LoginForm() {
-  // const form = useForm<z.inter<typeofloginSchema>>({
-  //   resolver: zodResolver(loginSchema),
-  //   defaultValues: {
-  //     email: "",
-  //     password: "",
-  //     rememberMe: false,
-  //   },
-  // });
+  const form = useForm<z.infer<typeof loginSchema>>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+      rememberMe: false,
+    },
+  });
 
   return (
     <main>
-      <Card className="flex w-96 h-96 flex-col justify-between p-6">
-        <CardHeader className="flex justify-between  items-center">
-          <CardTitle>Welcome to Shopedia</CardTitle>
-          <CardTitle className="flex items-center ">
-            <button className="rounded-2xl border-2 border-black h-10 w-18">Sign up</button>
-          </CardTitle>
+      <Card className="flex flex-col justify-between h-[calc(100vh-3rem)] py-6">
+        <CardHeader className="flex flex-col items-start ">
+          <CardTitle>Hello! Welcome to Shopedia</CardTitle>
+          <CardTitle>We are glad to see you 🎉🎉</CardTitle>
+          <CardTitle className="flex items-center "></CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
-          <h1>Login</h1>
-          <input type="text" className="border-2 border-black rounded-2xl" />
-          <h1>Passwrord</h1>
-          <input type="text" className="border-2 border-black rounded-2xl" />
-          <button className="bg-green-400 rounded-full border-2 border-black">Login</button>
+          <Form {...form}>
+            <form className="flex flex-col gap-4 text-muted-foreground ">
+              <div className="text-muted-foreground hover:text-primary">
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Email</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Your email" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div className="text-muted-foreground hover:text-primary">
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Password</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Password" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
+              <Button>Login</Button>
+            </form>
+          </Form>
         </CardContent>
-        <CardFooter className="gap-4">
+        <CardFooter className="flex gap-4 items-center">
           <button>Google</button>
           <button>Facebook</button>
           <button>Twitter</button>
