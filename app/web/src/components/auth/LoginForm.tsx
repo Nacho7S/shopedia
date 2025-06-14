@@ -7,7 +7,12 @@ import { Input } from "@/components/ui/input";
 import { loginSchema } from "@/schema/form-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { FcGoogle } from "react-icons/fc";
 import { useForm } from "react-hook-form";
+import { FaFacebook } from "react-icons/fa";
+import Link from "next/link";
+import { FaMeta } from "react-icons/fa6";
+
 export default function LoginForm() {
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -20,16 +25,16 @@ export default function LoginForm() {
 
   return (
     <main>
-      <Card className="flex flex-col justify-between h-[calc(100vh-3rem)] py-6">
+      <Card className="flex flex-col  h-[calc(100vh-3rem)] py-6">
         <CardHeader className="flex flex-col items-start ">
           <CardTitle>Hello! Welcome to Shopedia</CardTitle>
           <CardTitle>We are glad to see you 🎉🎉</CardTitle>
           <CardTitle className="flex items-center "></CardTitle>
         </CardHeader>
-        <CardContent className="flex flex-col gap-4">
+        <CardContent className="flex flex-col gap-4 pt-24">
           <Form {...form}>
             <form className="flex flex-col gap-4 text-muted-foreground ">
-              <div className="text-muted-foreground hover:text-primary">
+              <div className="text-muted-foreground hover:text-primary hover:cursor-pointer ">
                 <FormField
                   control={form.control}
                   name="email"
@@ -44,7 +49,7 @@ export default function LoginForm() {
                   )}
                 />
               </div>
-              <div className="text-muted-foreground hover:text-primary">
+              <div className="text-muted-foreground hover:text-primary  hover:cursor-pointer">
                 <FormField
                   control={form.control}
                   name="password"
@@ -61,14 +66,25 @@ export default function LoginForm() {
               </div>
 
               <Button>Login</Button>
+              <p className="flex items-center justify-center text-sm text-muted-foreground">
+                Don't have an account?
+                <Link rel="stylesheet" href="#" className="hover:underline text-blue-500">
+                  Sign up
+                </Link>
+              </p>
             </form>
           </Form>
         </CardContent>
-        <CardFooter className="flex gap-4 items-center">
-          <button>Google</button>
-          <button>Facebook</button>
-          <button>Twitter</button>
-          <button>test</button>
+        <CardFooter className="flex items-center justify-center gap-4">
+          <Button variant={"outline"}>
+            <FcGoogle />
+          </Button>
+          <Button variant={"outline"}>
+            <FaMeta />
+          </Button>
+          <Button variant={"outline"}>
+            <FaFacebook />
+          </Button>
         </CardFooter>
       </Card>
     </main>
