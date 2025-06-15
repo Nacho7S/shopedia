@@ -67,7 +67,7 @@ export default function LoginForm() {
 
               <Button>Login</Button>
               <p className="flex items-center justify-center text-sm text-muted-foreground">
-                Don't have an account?
+                Don&apos;t have an account?
                 <Link rel="stylesheet" href="#" className="hover:underline text-blue-500">
                   Sign up
                 </Link>

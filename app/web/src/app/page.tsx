@@ -1,19 +1,17 @@
-import LoginForm from "@/components/auth/LoginForm";
-import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function Home() {
   return (
     <main>
       <nav>
-        <div className="flex items-center justify-between p-4 bg-gray-800 text-white">
-          <div className="text-lg font-bold">My App</div>
+        <div className="flex items-center justify-between p-4 bg-red-200 text-white">
+          <div className="text-lg font-bold ">Shopedia</div>
           <div className="space-x-4">
-            <a href="/" className="hover:underline">
-              Home
-            </a>
-            <a href="/login" className="hover:underline">
-              Login
-            </a>
+            <Button>
+              <Link href={"/auth/login"}>Login</Link>
+            </Button>
+            <Button>Sign up</Button>
           </div>
         </div>
       </nav>
