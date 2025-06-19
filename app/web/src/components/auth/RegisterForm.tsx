@@ -9,6 +9,8 @@ import { registerSchema } from "@/schema/form-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
 import { useForm } from "react-hook-form";
+import { METHODS } from "http";
+import { json } from "stream/consumers";
 
 export default function RegisterForm() {
   const form = useForm<z.infer<typeof registerSchema>>({
@@ -20,8 +22,17 @@ export default function RegisterForm() {
     },
   });
 
-  const onSubmit = () => {
-    return null;
+  const onSubmit = async (values: z.infer<typeof registerSchema>) => {
+    try {
+      const response = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: {
+          "content-Type": "aplication/json",
+        },
+        body: json.stringify(values),
+        credentials: "include",
+      });
+    } catch (error) {}
   };
   return (
     <main>

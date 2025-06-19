@@ -43,12 +43,12 @@ export default function LoginForm() {
         setSuccess("Login successful!");
         setError("");
         // Redirect or perform any other action after successful login
-        console.log("SIGN IN RESPONSE:", response);
         router.push("/"); // Adjust the path as needed
       } else {
         setError("Invalid email or password. Please try again.");
         setSuccess("");
       }
+      console.log("SIGN IN RESPONSE:", response);
     } catch (error) {
       console.error("Login error:", error);
       setError("An error occurred during login. Please try again later.");
