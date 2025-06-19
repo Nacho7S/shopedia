@@ -6,10 +6,173 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name       String
+  email      String  @unique
+  password   String
+  pictureUrl String?
+
+  Review    Review[]
+  Wishlists Wishlists[]
+  Cart      Cart[]
+}
+
+model Categories {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name    String
+  Product Product[]
+}
+
+model Product {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name            String
+  price           Float
+  stock           Int
+  ProductPictures ProductPictures[]
+  Order           Order[]
+
+  categoryId String
+  catergory  Categories @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  Review    Review[]
+  Wishlists Wishlists[]
+  CartItem  CartItem[]
+  Tags      Tags[]
+}
+
+model ProductPictures {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  url String
+
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  Tags   Tags?   @relation(fields: [tagsId], references: [id])
+  tagsId String?
+}
+
+model Tags {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name String
+
+  tagId           String
+  product         Product           @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  ProductPictures ProductPictures[]
+}
+
+model Cart {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId String
+  user   User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items  CartItem[]
+}
+
+model CartItem {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  cartId    String
+  productId String
+  quantity  Int
+
+  cart    Cart    @relation(fields: [cartId], references: [id])
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model Order {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  totalAmount Float
+
+  status          OrderStatus @default(PENDING)
+  shippingName    String
+  shippingPhone   String
+  shippingAddress String
+
+  product    String
+  productId  Product      @relation(fields: [product], references: [id], onDelete: Cascade)
+  OrderItems OrderItems[]
+}
+
+model OrderItems {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  orderId String
+  order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+}
+
+model Review {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  product   String
+  productId Product @relation(fields: [product], references: [id], onDelete: Cascade)
+
+  comment String
+  rating  String
+  star    Int
+}
+
+model Wishlists {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+enum OrderStatus {
+  PENDING
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  CANCELED
+  PROCESSING //khusus manual transfer
+  APPROVED //khusus manual transfer
+  COMPLETED //setelah check in
 }
