@@ -11,7 +11,9 @@ export default function Home() {
             <Button>
               <Link href={"/auth/login"}>Login</Link>
             </Button>
-            <Button>Sign up</Button>
+            <Button>
+              <Link href={"/auth/signUp"}>Sign up</Link>
+            </Button>
           </div>
         </div>
       </nav>

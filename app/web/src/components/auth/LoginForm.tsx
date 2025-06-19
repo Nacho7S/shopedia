@@ -1,27 +1,60 @@
 "use client";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "../ui/button";
 import { Input } from "@/components/ui/input";
-import { loginSchema } from "@/schema/form-schema";
-import { zodResolver } from "@hookform/resolvers/zod";
+
 import { z } from "zod";
-import { FcGoogle } from "react-icons/fc";
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signIn } from "next-auth/react";
+
+import { loginSchema } from "@/schema/form-schema";
+import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
-import Link from "next/link";
 import { FaMeta } from "react-icons/fa6";
 
 export default function LoginForm() {
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
       password: "",
-      rememberMe: false,
     },
   });
+  const router = useRouter();
+
+  const onSubmit = async (values: z.infer<typeof loginSchema>) => {
+    try {
+      const response = await signIn("credentials", {
+        redirect: false,
+        username: values.email,
+        password: values.password,
+      });
+
+      if (response?.ok) {
+        setSuccess("Login successful!");
+        setError("");
+        // Redirect or perform any other action after successful login
+        console.log("SIGN IN RESPONSE:", response);
+        router.push("/"); // Adjust the path as needed
+      } else {
+        setError("Invalid email or password. Please try again.");
+        setSuccess("");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      setError("An error occurred during login. Please try again later.");
+      setSuccess("");
+    }
+  };
 
   return (
     <main>
@@ -33,7 +66,7 @@ export default function LoginForm() {
         </CardHeader>
         <CardContent className="flex flex-col gap-4 pt-24">
           <Form {...form}>
-            <form className="flex flex-col gap-4 text-muted-foreground ">
+            <form className="flex flex-col gap-4 text-muted-foreground " onSubmit={form.handleSubmit(onSubmit)}>
               <div className="text-muted-foreground hover:text-primary hover:cursor-pointer ">
                 <FormField
                   control={form.control}
