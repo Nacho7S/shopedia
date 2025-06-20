@@ -1,10 +1,10 @@
 "use client";
-import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { toast } from "sonner";
 import { Button } from "../ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -19,9 +19,6 @@ import { FaFacebook } from "react-icons/fa";
 import { FaMeta } from "react-icons/fa6";
 
 export default function LoginForm() {
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
-
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -40,19 +37,15 @@ export default function LoginForm() {
       });
 
       if (response?.ok) {
-        setSuccess("Login successful!");
-        setError("");
+        toast.success("Logged in successfully");
         // Redirect or perform any other action after successful login
-        router.push("/"); // Adjust the path as needed
+        router.push("/");
       } else {
-        setError("Invalid email or password. Please try again.");
-        setSuccess("");
+        toast.error("Invalid email or password. Please try again.");
       }
-      console.log("SIGN IN RESPONSE:", response);
     } catch (error) {
       console.error("Login error:", error);
-      setError("An error occurred during login. Please try again later.");
-      setSuccess("");
+      toast.error("An error occurred. Please try again.");
     }
   };
 
