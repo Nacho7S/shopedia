@@ -57,6 +57,7 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: "/auth/login",
     error: "/auth/login",
+    newUser: "/auth/register", // Will disable the new account creation screen
   },
   secret: process.env.NEXTAUTH_SECRET,
 };
