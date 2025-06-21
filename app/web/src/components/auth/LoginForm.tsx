@@ -94,7 +94,7 @@ export default function LoginForm() {
               <Button>Login</Button>
               <p className="flex items-center justify-center text-sm text-muted-foreground">
                 Don&apos;t have an account?
-                <Link rel="stylesheet" href="#" className="hover:underline text-blue-500">
+                <Link rel="stylesheet" href={"/auth/signUp"} className="hover:underline text-blue-500">
                   Sign up
                 </Link>
               </p>
