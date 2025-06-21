@@ -13,9 +13,9 @@ export default function Navbar() {
       </Link>
 
       <ul className="flex gap-8">
-        <div className="flex gap-4 bg-gray-300 items-center justify-center h-10 w-72 rounded-2xl text-black">
-          <IoMdSearch className="text-2xl " />
-          <input type="text" className=" w-52 border-2  border-black hover:rounded-2xl rounded-2xl flex items-center justify-center" />
+        <div className="flex items-center gap-3 bg-gray-200 h-12 w-72 rounded-full px-4 shadow-inner">
+          <IoMdSearch className="text-xl text-gray-600" />
+          <Input type="text" placeholder="Search our product" className="border-0 shadow-none focus-visible:ring-0 focus-visible:ring-offset-0 bg-transparent p-0 text-sm" />
         </div>
       </ul>
 
