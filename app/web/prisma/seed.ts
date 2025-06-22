@@ -4,24 +4,34 @@ import { genSalt, hash } from "bcrypt";
 const prisma = new PrismaClient();
 
 async function dataInput() {
-  const salt = await genSalt(10);
-  const hashedPassword = await hash("password", salt);
   console.log("Seeding started");
 
-  const budi = await prisma.user.create({
-    data: {
-      name: "Budi",
-      email: "budi@example.com",
-      password: hashedPassword,
-    },
+  // Check if the user already exists
+  const existingUser = await prisma.user.findUnique({
+    where: { email: "budi@example.com" },
   });
 
-  console.log("Seeded user:", budi);
+  if (!existingUser) {
+    const salt = await genSalt(10);
+    const hashedPassword = await hash("password", salt);
+
+    const budi = await prisma.user.create({
+      data: {
+        name: "Budi",
+        email: "budi@example.com",
+        password: hashedPassword,
+      },
+    });
+
+    console.log("Seeded user:", budi);
+  } else {
+    console.log("User  already exists:", existingUser);
+  }
 }
 
 dataInput()
   .catch((e) => {
-    console.error(e);
+    console.error("Error during seeding:", e);
     process.exit(1);
   })
   .finally(async () => {

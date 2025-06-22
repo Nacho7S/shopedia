@@ -1,6 +1,5 @@
 import { registerSchema } from "@/schema/form-schema";
 import { PrismaClient } from "@prisma/client";
-import { ok } from "assert";
 import { hash } from "bcrypt";
 
 const prisma = new PrismaClient();
