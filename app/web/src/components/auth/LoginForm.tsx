@@ -28,6 +28,15 @@ export default function LoginForm() {
   });
   const router = useRouter();
 
+  async function googleLogin() {
+    try {
+      await signIn("google", { callbackUrl: "/" });
+    } catch (error) {
+      toast.error("An error occurred while signing in. Please try again.");
+      console.log(error);
+    }
+  }
+
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
     try {
       const response = await signIn("credentials", {
@@ -102,7 +111,7 @@ export default function LoginForm() {
           </Form>
         </CardContent>
         <CardFooter className="flex items-center justify-center gap-4">
-          <Button variant={"outline"}>
+          <Button variant={"outline"} onClick={googleLogin}>
             <FcGoogle />
           </Button>
           <Button variant={"outline"}>
