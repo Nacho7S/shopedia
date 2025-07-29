@@ -1,11 +1,9 @@
-import Navbar from "@/components/Navbar";
+"use client";
 
 export default function Home() {
   return (
     <main className="flex h-screen flex-col">
-      <nav className="p-3 w-full">
-        <Navbar />
-      </nav>
+      <div>Testing</div>
       {/* // Main content area */}
     </main>
   );

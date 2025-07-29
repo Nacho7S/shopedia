@@ -4,8 +4,12 @@ import { Button } from "./ui/button";
 import Link from "next/link";
 import { Input } from "./ui/input";
 import { IoMdSearch } from "react-icons/io";
+import { useSession } from "next-auth/react";
+import Image from "next/image";
 
 export default function Navbar() {
+  const { data: session, status } = useSession();
+
   return (
     <nav className="bg-gray-100 rounded-2xl h-16 flex items-center justify-between px-6">
       <Link href={"/"} className="text-2xl text-gray-900 font-bold">
@@ -19,13 +23,24 @@ export default function Navbar() {
         </div>
       </ul>
 
-      <div className="flex gap-3">
-        <Button variant={"ghost"}>
-          <Link href={"/auth/login"}>Login</Link>
-        </Button>
-        <Button variant={"ghost"}>
-          <Link href={"/auth/signUp"}>Sign up</Link>
-        </Button>
+      <div className="flex gap-3 items-center">
+        {status === "loading" ? (
+          <span>Loading...</span>
+        ) : session ? (
+          <>
+            {session.user?.image && <Image src={session.user.image} alt="Profile" width={32} height={32} className="rounded-full" />}
+            <span className="text-sm">{session.user?.name}</span>
+          </>
+        ) : (
+          <>
+            <Button variant={"ghost"}>
+              <Link href={"/auth/login"}>Login</Link>
+            </Button>
+            <Button variant={"ghost"}>
+              <Link href={"/auth/signUp"}>Sign up</Link>
+            </Button>
+          </>
+        )}
       </div>
     </nav>
   );
