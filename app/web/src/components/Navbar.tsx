@@ -6,8 +6,14 @@ import { Input } from "./ui/input";
 import { IoMdSearch } from "react-icons/io";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import { motion } from "motion/react";
+
+import { useState } from "react";
+
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 export default function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
   const { data: session, status } = useSession();
 
   return (
@@ -23,23 +29,50 @@ export default function Navbar() {
         </div>
       </ul>
 
-      <div className="flex gap-3 items-center">
+      <div className="">
         {status === "loading" ? (
           <span>Loading...</span>
         ) : session ? (
-          <>
-            {session.user?.image && <Image src={session.user.image} alt="Profile" width={32} height={32} className="rounded-full" />}
-            <span className="text-sm">{session.user?.name}</span>
-          </>
+          <div className="flex">
+            <Popover open={isOpen} onOpenChange={setIsOpen}>
+              <PopoverTrigger asChild>
+                <motion.button onClick={() => setIsOpen(!isOpen)} className="flex items-center gap-2 cursor-pointer bg-transparent border-none outline-none">
+                  <motion.div
+                    animate={{
+                      x: isOpen ? -60 : 0,
+                      rotate: isOpen ? 360 : 0,
+                    }}
+                    transition={{ duration: 0.8, type: "spring", stiffness: 120 }}
+                  >
+                    {session.user?.image && <Image src={session.user.image} alt="Profile" width={32} height={32} className="rounded-full" />}
+                  </motion.div>
+                </motion.button>
+              </PopoverTrigger>
+
+              <PopoverContent align="end" className="w-40">
+                <div className="flex flex-col gap-2 justify-center items-center">
+                  <Link href={"/user/profile"}>
+                    <Button variant="ghost">Profile</Button>
+                  </Link>
+                  <Link href={"/user/profile"}>
+                    <Button variant="ghost">Profile</Button>
+                  </Link>
+                  <Link href={"/user/profile"}>
+                    <Button variant="ghost">Profile</Button>
+                  </Link>
+                </div>
+              </PopoverContent>
+            </Popover>
+          </div>
         ) : (
-          <>
+          <div className="p-6 flex gap-3 items-center">
             <Button variant={"ghost"}>
               <Link href={"/auth/login"}>Login</Link>
             </Button>
             <Button variant={"ghost"}>
               <Link href={"/auth/signUp"}>Sign up</Link>
             </Button>
-          </>
+          </div>
         )}
       </div>
     </nav>
