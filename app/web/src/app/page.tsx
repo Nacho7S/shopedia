@@ -5,7 +5,7 @@ export default function Home() {
       <div>
         <Dashboard />
       </div>
-      <div>Testing</div>
+
       {/* // Main content area */}
     </main>
   );

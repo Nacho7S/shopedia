@@ -1,8 +1,8 @@
 "use client";
 
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import Link from "next/link";
-import { Input } from "./ui/input";
+import { Input } from "../ui/input";
 import { IoMdSearch } from "react-icons/io";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
@@ -17,7 +17,7 @@ export default function Navbar() {
   const { data: session, status } = useSession();
 
   return (
-    <nav className="bg-gray-100 rounded-2xl h-16 flex items-center justify-between px-6">
+    <nav className="bg-gray-100 rounded-full h-16 flex items-center justify-between px-6 w-[800px]">
       <Link href={"/"} className="text-2xl text-gray-900 font-bold">
         Shopedia
       </Link>

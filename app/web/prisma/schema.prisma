@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -23,18 +17,37 @@ model User {
   password   String
   pictureUrl String?
 
+  role Role @default(USER)
+
+  seller    Seller? // if user is a seller, this points to Seller record
   Review    Review[]
   Wishlists Wishlists[]
   Cart      Cart[]
 }
 
-model Categories {
+model Seller {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  name    String
-  Product Product[]
+  userId     String  @unique
+  shopName   String
+  bio        String?
+  shopImage  String?
+  rating     Float?  @default(0)
+  isVerified Boolean @default(false)
+
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  products Product[]
+}
+
+model Category {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name     String    @unique
+  products Product[]
 }
 
 model Product {
@@ -45,11 +58,15 @@ model Product {
   name            String
   price           Float
   stock           Int
+  description     String?
   ProductPictures ProductPictures[]
   Order           Order[]
 
   categoryId String
-  catergory  Categories @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  sellerId String
+  seller   Seller? @relation(fields: [sellerId], references: [id], onDelete: Cascade)
 
   Review    Review[]
   Wishlists Wishlists[]
@@ -67,8 +84,8 @@ model ProductPictures {
   productId String
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
-  Tags   Tags?   @relation(fields: [tagsId], references: [id])
   tagsId String?
+  Tags   Tags?   @relation(fields: [tagsId], references: [id])
 }
 
 model Tags {
@@ -78,8 +95,9 @@ model Tags {
 
   name String
 
-  tagId           String
-  product         Product           @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
   ProductPictures ProductPictures[]
 }
 
@@ -118,8 +136,8 @@ model Order {
   shippingPhone   String
   shippingAddress String
 
-  product    String
-  productId  Product      @relation(fields: [product], references: [id], onDelete: Cascade)
+  productId  String
+  product    Product      @relation(fields: [productId], references: [id], onDelete: Cascade)
   OrderItems OrderItems[]
 }
 
@@ -140,12 +158,11 @@ model Review {
   userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  product   String
-  productId Product @relation(fields: [product], references: [id], onDelete: Cascade)
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
-  comment String
-  rating  String
-  star    Int
+  comment String?
+  rating  Int
 }
 
 model Wishlists {
@@ -160,6 +177,12 @@ model Wishlists {
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
 
+enum Role {
+  USER
+  SELLER
+  ADMIN
+}
+
 enum OrderStatus {
   PENDING
   PROCESSING
@@ -172,7 +195,7 @@ enum PaymentStatus {
   PENDING
   PAID
   CANCELED
-  PROCESSING //khusus manual transfer
-  APPROVED //khusus manual transfer
-  COMPLETED //setelah check in
+  PROCESSING
+  APPROVED
+  COMPLETED
 }
