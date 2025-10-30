@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Role } from "@prisma/client";
 import { genSalt, hash } from "bcrypt";
 
 const prisma = new PrismaClient();
@@ -6,27 +6,54 @@ const prisma = new PrismaClient();
 async function dataInput() {
   console.log("Seeding started");
 
-  // Check if the user already exists
-  const existingUser = await prisma.user.findUnique({
-    where: { email: "budi@example.com" },
+  const salt = await genSalt(12);
+  const hashedPassword = await hash("password", salt);
+
+  const user1 = await prisma.user.create({
+    data: {
+      name: "johndoe",
+      email: "johndoe@gmail.com",
+      password: hashedPassword,
+      role: Role.USER,
+    },
   });
 
-  if (!existingUser) {
-    const salt = await genSalt(10);
-    const hashedPassword = await hash("password", salt);
+  // 🏪 Seller user
+  const sellerUser = await prisma.user.create({
+    data: {
+      name: "Anggi",
+      email: "anggi@gmail.com",
+      password: hashedPassword,
+      role: Role.SELLER,
+    },
+  });
 
-    const budi = await prisma.user.create({
-      data: {
-        name: "Budi",
-        email: "budi@example.com",
-        password: hashedPassword,
-      },
-    });
+  // 💼 Seller profile linked to that user
+  const seller = await prisma.seller.create({
+    data: {
+      shopName: "Anggi Store",
+      bio: "We sell the best T-Shirts in town!",
+      userId: sellerUser.id, // ✅ link to the SELLER user
+    },
+  });
 
-    console.log("Seeded user:", budi);
-  } else {
-    console.log("User  already exists:", existingUser);
-  }
+  const category = await prisma.category.create({
+    data: {
+      name: "Shirt",
+    },
+  });
+
+  const product = await prisma.product.create({
+    data: {
+      name: "Cotton candy T-shirt",
+      price: 350000,
+      stock: 100,
+      categoryId: category.id,
+      sellerId: seller.id,
+    },
+  });
+
+  console.log("seeding is complete ✅");
 }
 
 dataInput()

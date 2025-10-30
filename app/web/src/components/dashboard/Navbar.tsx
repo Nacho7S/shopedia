@@ -2,11 +2,13 @@
 
 import { Button } from "../ui/button";
 import Link from "next/link";
-import { Input } from "../ui/input";
-import { IoMdSearch } from "react-icons/io";
+// import { Input } from "../ui/input";
+// import { IoMdSearch } from "react-icons/io";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { motion } from "motion/react";
+
+import { signOut } from "next-auth/react";
 
 import { useState } from "react";
 
@@ -22,12 +24,12 @@ export default function Navbar() {
         Shopedia
       </Link>
 
-      <ul className="flex gap-8">
+      {/* <ul className="flex gap-8">
         <div className="flex items-center gap-3 bg-gray-200 h-12 w-72 rounded-full px-4 shadow-inner">
           <IoMdSearch className="text-xl text-gray-600" />
           <Input type="text" placeholder="Search our product" className="border-0 shadow-none focus-visible:ring-0 focus-visible:ring-offset-0 bg-transparent p-0 text-sm" />
         </div>
-      </ul>
+      </ul> */}
 
       <div className="">
         {status === "loading" ? (
@@ -60,6 +62,12 @@ export default function Navbar() {
                   <Link href={"/user/profile"}>
                     <Button variant="ghost">Profile</Button>
                   </Link>
+                  <Button
+                    variant="ghost"
+                    onClick={() => signOut({ callbackUrl: "/" })} // redirect back home after logout
+                  >
+                    Logout
+                  </Button>
                 </div>
               </PopoverContent>
             </Popover>
@@ -70,7 +78,7 @@ export default function Navbar() {
               <Link href={"/auth/login"}>Login</Link>
             </Button>
             <Button variant={"ghost"}>
-              <Link href={"/auth/signUp"}>Sign up</Link>
+              <Link href={"/auth/Roles"}>Sign up</Link>
             </Button>
           </div>
         )}
