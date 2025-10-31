@@ -78,7 +78,7 @@ export default function Navbar() {
               <Link href={"/auth/login"}>Login</Link>
             </Button>
             <Button variant={"ghost"}>
-              <Link href={"/auth/Roles"}>Sign up</Link>
+              <Link href={"/auth/roles"}>Sign up</Link>
             </Button>
           </div>
         )}
