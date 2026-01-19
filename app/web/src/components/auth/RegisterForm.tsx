@@ -4,13 +4,13 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 import { registerSchema } from "@/schema/form-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
 import { useForm } from "react-hook-form";
-import { METHODS } from "http";
-import { json } from "stream/consumers";
+import { useRouter } from "next/navigation";
 
 export default function RegisterForm() {
   const form = useForm<z.infer<typeof registerSchema>>({
@@ -22,6 +22,8 @@ export default function RegisterForm() {
     },
   });
 
+  const router = useRouter();
+
   const onSubmit = async (values: z.infer<typeof registerSchema>) => {
     try {
       const response = await fetch("/api/auth/register", {
@@ -29,10 +31,20 @@ export default function RegisterForm() {
         headers: {
           "content-Type": "aplication/json",
         },
-        body: json.stringify(values),
+        body: JSON.stringify(values),
         credentials: "include",
       });
-    } catch (error) {}
+
+      if (response?.ok) {
+        toast.success("account created, Welcome to shopedia 🎉🎉");
+        router.push("/");
+      } else {
+        toast.error("something went wrong");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("An error occured. Please try again.");
+    }
   };
   return (
     <main>
@@ -48,7 +60,7 @@ export default function RegisterForm() {
               <div className="text-muted-foreground hover:text-primary hover:cursor-pointer ">
                 <FormField
                   control={form.control}
-                  name="email"
+                  name="name"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Name</FormLabel>
