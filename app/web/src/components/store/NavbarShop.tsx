@@ -31,7 +31,7 @@ export default function ShopNavbar() {
             Cart
           </Button>
         </Link>
-        <Link href="/account" className="hover:text-gray-900 transition flex justify-center items-center gap-2">
+        <Link href="/auth" className="hover:text-gray-900 transition flex justify-center items-center gap-2">
           <Button variant={"ghost"}>
             <FaUser />
             Account

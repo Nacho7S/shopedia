@@ -10,39 +10,8 @@ import Image from "next/image";
 import { Card, CardFooter, CardTitle, CardContent, CardDescription } from "@/components/ui/card";
 
 export default function Dashboard() {
-  //   const categoriesCollection = [
-  //     {
-  //       id: 1,
-  //       icon: <FaTshirt />,
-  //     },
-  //     {
-  //       id: 2,
-  //       icon: <GiSleevelessJacket />,
-  //     },
-  //     {
-  //       id: 3,
-  //       icon: <IoShirtSharp />,
-  //     },
-  //     {
-  //       id: 4,
-  //       icon: <GiTrousers />,
-  //     },
-  //     {
-  //       id: 5,
-  //       icon: <PiBagFill />,
-  //     },
-  //     {
-  //       id: 6,
-  //       icon: <GiRunningShoe />,
-  //     },
-  //     {
-  //       id: 7,
-  //       icon: <CgMenuGridO />,
-  //     },
-  //   ];
-
   return (
-    <main className="w-screen">
+    <main className="w-screen h-[100vh]">
       <div className="flex justify-center items-center w-screen">
         <ShopNavbar />
       </div>
@@ -53,7 +22,7 @@ export default function Dashboard() {
       </div>
 
       <div className="w-screen h-96 flex justify-center items-center gap-3">
-        <Card className="h-[340px] w-[200px] flex justify-center items-center border-2 ">
+        <Card className="h-[340px] w-[200px] flex justify-center items-center border-2 hover:shadow-2xl hover:-translate-y-3">
           <CardContent className="p-0 w-full flex justify-center">
             <Image src="https://i.pinimg.com/736x/8c/db/e1/8cdbe123010c380e20f264a8fdd57938.jpg" alt="Shop items images" width={200} height={200} className="rounded-md h-[205px] w-[200px]" />
           </CardContent>
@@ -65,7 +34,7 @@ export default function Dashboard() {
           <CardFooter>footer1</CardFooter>
         </Card>
 
-        <Card className="h-[340px] w-[200px] flex justify-center items-center border-2 ">
+        <Card className="h-[340px] w-[200px] flex justify-center items-center border-2 hover:shadow-2xl hover:-translate-y-3">
           <CardContent className="p-0 w-full flex justify-center">
             <Image src="https://i.pinimg.com/736x/8c/db/e1/8cdbe123010c380e20f264a8fdd57938.jpg" alt="Shop items images" width={200} height={200} className="rounded-md h-[205px] w-[200px]" />
           </CardContent>
@@ -77,7 +46,7 @@ export default function Dashboard() {
           <CardFooter>footer1</CardFooter>
         </Card>
 
-        <Card className="h-[340px] w-[200px] flex justify-center items-center border-2 ">
+        <Card className="h-[340px] w-[200px] flex justify-center items-center border-2 hover:shadow-2xl hover:-translate-y-3">
           <CardContent className="p-0 w-full flex justify-center">
             <Image src="https://i.pinimg.com/736x/8c/db/e1/8cdbe123010c380e20f264a8fdd57938.jpg" alt="Shop items images" width={200} height={200} className="rounded-md h-[205px] w-[200px]" />
           </CardContent>
@@ -89,7 +58,7 @@ export default function Dashboard() {
           <CardFooter>footer1</CardFooter>
         </Card>
 
-        <Card className="h-[340px] w-[200px] flex justify-center items-center border-2 ">
+        <Card className="h-[340px] w-[200px] flex justify-center items-center border-2 hover:shadow-2xl hover:-translate-y-3">
           <CardContent className="p-0 w-full flex justify-center">
             <Image src="https://i.pinimg.com/736x/8c/db/e1/8cdbe123010c380e20f264a8fdd57938.jpg" alt="Shop items images" width={200} height={200} className="rounded-md h-[205px] w-[200px]" />
           </CardContent>
@@ -101,8 +70,69 @@ export default function Dashboard() {
           <CardFooter>footer1</CardFooter>
         </Card>
 
-        <Card className="h-[340px] w-[200px] flex justify-center items-center border-2 ">
+        <Card className="h-[340px] w-[200px] flex justify-center items-center border-2 hover:shadow-2xl hover:-translate-y-3">
           <CardContent className="p-0 w-full flex justify-center">
+            <Image src="https://i.pinimg.com/736x/8c/db/e1/8cdbe123010c380e20f264a8fdd57938.jpg" alt="Shop items images" width={200} height={200} className="rounded-md h-[205px] w-[200px]" />
+          </CardContent>
+          <CardTitle className=" w-50 justify-center items-center flex">Headphone JBL/ AA-10</CardTitle>
+          <div className="flex gap-2">
+            <CardDescription>decription1</CardDescription>
+            <CardDescription>decription1</CardDescription>
+          </div>
+          <CardFooter>footer1</CardFooter>
+        </Card>
+      </div>
+      <div className="w-screen h-96 flex justify-center items-center gap-3">
+        <Card className="h-[340px] w-[200px] flex justify-center items-center border-2 hover:shadow-2xl hover:-translate-y-3">
+          <CardContent className="p-0 w-full flex justify-center">
+            <Image src="https://i.pinimg.com/736x/8c/db/e1/8cdbe123010c380e20f264a8fdd57938.jpg" alt="Shop items images" width={200} height={200} className="rounded-md h-[205px] w-[200px]" />
+          </CardContent>
+          <CardTitle className=" w-50 justify-center items-center flex">Headphone JBL/ AA-10</CardTitle>
+          <div className="flex gap-2">
+            <CardDescription>decription1</CardDescription>
+            <CardDescription>decription1</CardDescription>
+          </div>
+          <CardFooter>footer1</CardFooter>
+        </Card>
+
+        <Card className="h-[340px] w-[200px] flex justify-center items-center border-2 hover:shadow-2xl hover:-translate-y-3">
+          <CardContent className="p-0 w-full flex justify-center">
+            <Image src="https://i.pinimg.com/736x/8c/db/e1/8cdbe123010c380e20f264a8fdd57938.jpg" alt="Shop items images" width={200} height={200} className="rounded-md h-[205px] w-[200px]" />
+          </CardContent>
+          <CardTitle className=" w-50 justify-center items-center flex">Headphone JBL/ AA-10</CardTitle>
+          <div className="flex gap-2">
+            <CardDescription>decription1</CardDescription>
+            <CardDescription>decription1</CardDescription>
+          </div>
+          <CardFooter>footer1</CardFooter>
+        </Card>
+
+        <Card className="h-[340px] w-[200px] flex justify-center items-center border-2 hover:shadow-2xl hover:-translate-y-3">
+          <CardContent className="p-0 w-full flex justify-center">
+            <Image src="https://i.pinimg.com/736x/8c/db/e1/8cdbe123010c380e20f264a8fdd57938.jpg" alt="Shop items images" width={200} height={200} className="rounded-md h-[205px] w-[200px]" />
+          </CardContent>
+          <CardTitle className=" w-50 justify-center items-center flex">Headphone JBL/ AA-10</CardTitle>
+          <div className="flex gap-2">
+            <CardDescription>decription1</CardDescription>
+            <CardDescription>decription1</CardDescription>
+          </div>
+          <CardFooter>footer1</CardFooter>
+        </Card>
+
+        <Card className="h-[340px] w-[200px] flex justify-center items-center border-2 hover:shadow-2xl hover:-translate-y-3">
+          <CardContent className="p-0 w-full flex justify-center">
+            <Image src="https://i.pinimg.com/736x/8c/db/e1/8cdbe123010c380e20f264a8fdd57938.jpg" alt="Shop items images" width={200} height={200} className="rounded-md h-[205px] w-[200px]" />
+          </CardContent>
+          <CardTitle className=" w-50 justify-center items-center flex">Headphone JBL/ AA-10</CardTitle>
+          <div className="flex gap-2">
+            <CardDescription>decription1</CardDescription>
+            <CardDescription>decription1</CardDescription>
+          </div>
+          <CardFooter>footer1</CardFooter>
+        </Card>
+
+        <Card className="h-[340px] w-[200px] flex justify-center items-center border-2 hover:shadow-2xl hover:-translate-y-3">
+          <CardContent className="p-0 w-full flex justify-center hover:shadow-2xl">
             <Image src="https://i.pinimg.com/736x/8c/db/e1/8cdbe123010c380e20f264a8fdd57938.jpg" alt="Shop items images" width={200} height={200} className="rounded-md h-[205px] w-[200px]" />
           </CardContent>
           <CardTitle className=" w-50 justify-center items-center flex">Headphone JBL/ AA-10</CardTitle>
